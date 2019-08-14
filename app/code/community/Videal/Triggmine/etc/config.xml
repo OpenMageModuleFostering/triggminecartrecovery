@@ -143,20 +143,6 @@
 					</sales_order_place_after_handler>
 				</observers>
 			</sales_order_place_after>
-			<controller_action_layout_load_before> <!-- identifier of the event we want to catch -->
-				<observers>
-					<controller_action_postdispatch_handler> <!-- identifier of the event handler -->
-						<type>model</type>
-						<!-- class method call type; valid are model, object and singleton -->
-						<class>triggmine/observer</class>
-						<!-- observers class alias -->
-						<method>onPageLoaded</method>
-						<!-- observer's method to be called -->
-						<args></args>
-						<!-- additional arguments passed to observer -->
-					</controller_action_postdispatch_handler>
-				</observers>
-			</controller_action_layout_load_before>
 			<admin_system_config_changed_section_triggmine> <!-- identifier of the event we want to catch -->
 				<observers>
 					<admin_system_config_changed_section_triggmine_handler> <!-- identifier of the event handler -->
@@ -185,6 +171,20 @@
 					</frontend_videal_triggmine_footer_event_handler>
 				</observers>
 			</frontend_videal_triggmine_footer_event>
+			<controller_action_postdispatch_wishlist_index_cart>
+				<observers>
+					<controller_action_postdispatch_wishlist_index_cart_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartItemAddedFromWishList</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</controller_action_postdispatch_wishlist_index_cart_handler>
+				</observers>
+			</controller_action_postdispatch_wishlist_index_cart>
 		</events>
 	</global>
 	<frontend>

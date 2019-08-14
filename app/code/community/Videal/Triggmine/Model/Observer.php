@@ -69,8 +69,11 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 
 	public function onFooterEvent()
 	{
-		$this->registerJavaScriptFile('videal/triggmine/api.js', true);
-		$this->outputJavaScript();
+		if(!$this->isAjaxRequest()) {
+			$this->registerJavaScriptFile('videal/triggmine/api.js', true);
+			parent::onPageLoaded();
+			$this->outputJavaScript();
+		}
 	}
 	/**
 	 * Returns URL of the website.
@@ -188,6 +191,12 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 		return Mage::getStoreConfig($key);
 	}
 
+	public function onCartItemAddedFromWishList(Varien_Event_Observer $observer)
+	{
+		$data = $this->_refillShoppingCart();
+
+		$this->updateCartFull($data);
+	}
 
 	public function onCartItemAdded(Varien_Event_Observer $observer)
 	{
@@ -209,11 +218,11 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 
 			$data = array(
 				"CartItemId"        => (string) $productId,
-				"ThumbUrl"          => $catalogProduct->getSmallImageUrl(),
+				"ThumbnailUrl"      => $catalogProduct->getSmallImageUrl(),
 				"ImageUrl"          => $catalogProduct->getImageUrl(),
 				"Title"             => $productName,
 				"ShortDescription"  => $catalogProduct->getShortDescription(),
-				"FullDescription"   => $catalogProduct->getDescription(),
+				"Description"   => $catalogProduct->getDescription(),
 
 				"Price"             => $productPrice,
 				"Count"             => $productQty,
@@ -255,11 +264,11 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 
 				$data = array(
 					"CartItemId"        => (string) $productId,
-					"ThumbUrl"          => $product->getProduct()->getSmallImageUrl(),
+					"ThumbnailUrl"          => $product->getProduct()->getSmallImageUrl(),
 					"ImageUrl"          => $product->getProduct()->getImageUrl(),
 					"Title"             => $productName,
 					"ShortDescription"  => $_product->getShortDescription(),
-					"FullDescription"   => $_product->getDescription(),
+					"Description"   => $_product->getDescription(),
 
 					"Price"             => $product->getProduct()->getPrice(),
 					"Count"             => $newProduct['qty'],
@@ -306,8 +315,11 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 				'Description' => $product->getDescription(),
 				'ImageUrl'    => $product->getImageUrl()
 			);
+		
 
-			$cart['Items'][] = $data;
+			if ($data['Price'] != '0.00') {
+				$cart['Items'][] = $data;
+			}	
 		}
 
 		return $cart;
@@ -355,7 +367,7 @@ class Videal_Triggmine_Model_Observer extends TriggMine_Core
 			'ShortDescription'  => $product->getShortDescription(),
 			'Price'             => $product->getPrice(),
 			'Count'             => $product->getQty(),
-			"ThumbUrl"          => $product->getSmallImageUrl(),
+			"ThumbnailUrl"      => $product->getSmallImageUrl(),
 			"ImageUrl"          => $product->getImageUrl(),
 		);
 

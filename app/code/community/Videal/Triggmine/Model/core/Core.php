@@ -80,7 +80,7 @@
 		 * Log in file flag
 		 * @var bool
 		 */
-		protected $_logInFile = false;
+		protected $_logInFile = true;
 
 
 		public function __construct()
@@ -979,7 +979,7 @@
 
 			$cart = $this->_refillShoppingCart();
 
-			$this->updateCartFull($cart);
+			$this->updateCartFull($cart);			
 
 			return $this->_request($data);
 
