@@ -10,7 +10,7 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_EXPORT       = 'triggmine/triggmine_export/export';
     const XML_PATH_DATE_FROM    = 'triggmine/triggmine_export/my_date_from';
     const XML_PATH_DATE_TO      = 'triggmine/triggmine_export/my_date_to';
-    const VERSION_PLUGIN        = '3.0.5';
+    const VERSION_PLUGIN        = '3.0.7';
 
     protected $_storeManager;
     protected $_cartItemRepository;
@@ -341,12 +341,12 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function sendLogoutData($data)
     {
-        return $this->apiClient($data, 'api/events/prospect/registration');
+        return $this->apiClient($data, 'api/events/prospect/logout');
     }
 
     public function sendRegisterData($data)
     {
-        return $this->apiClient($data, 'api/events/prospect/logout');
+        return $this->apiClient($data, 'api/events/prospect/registration');
     }
 
     public function SoftChek($observer)
