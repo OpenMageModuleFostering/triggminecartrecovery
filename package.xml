@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>TriggMineCartRecovery</name>
-    <version>3.0.7</version>
+    <version>3.0.8.2</version>
     <stability>stable</stability>
     <license uri="https://opensource.org/licenses/gpl-license.php">GPL</license>
     <channel>community</channel>
@@ -14,9 +14,9 @@
 - Fixed 404 error after installation&#xD;
 - Bug fixes and performance improvements</notes>
     <authors><author><name>TriggMine</name><user>TriggMine</user><email>admin@triggmine.com</email></author></authors>
-    <date>2016-12-29</date>
-    <time>14:24:55</time>
-    <contents><target name="magecommunity"><dir name="Triggmine"><dir name="IntegrationModule"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Date.php" hash="d6b04acde97c3ec4eb52179740e420cb"/></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="de81018baa5695969e8fbf3e21950467"/></dir><dir name="Model"><file name="Observer.php" hash="a95b79b25db187e52b59fb31029cb0a7"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="IntmodulebackendController.php" hash="65549f09bc7c7a8f729e39ee18ed8439"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="995aa32694942bb16047c975f62e2561"/><file name="config.xml" hash="75061e53247b9cfd158564399110a928"/><file name="system.xml" hash="7ac41c4d460908c8f5d5d57429ef3cf9"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="triggmine_integrationmodule.xml" hash="b32666d99d55e357422141bb7f6ee17a"/></dir><dir name="template"><dir name="triggmine"><dir name="integrationmodule"><file name="init.phtml" hash="088f4b1efdbb774a020ebcb2d6405c86"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Triggmine_IntegrationModule.xml" hash="76eb92ed3d865cbd4aee6128557f719e"/></dir></target><target name="mageweb"><dir name="js"><dir name="triggmine"><dir name="integationmodule"><dir name="scripts"><file name="client.min.js" hash="068c5c31adf266449d9de64f31772f55"/><file name="fingerprint2.min.js" hash="36b594aba875677b7ede86aa823b2493"/><file name="jscookie.min.js" hash="390302a82ecd74b0e39e2ff66eb23c13"/></dir></dir></dir></dir></target></contents>
+    <date>2017-01-16</date>
+    <time>12:25:38</time>
+    <contents><target name="magecommunity"><dir name="Triggmine"><dir name="IntegrationModule"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Date.php" hash="d6b04acde97c3ec4eb52179740e420cb"/><file name="Footer.php" hash="1ccaf261bc98c90c931b82cb81dda396"/><file name="Info.php" hash="913a35fb9e4bfb02da2a2a64b0b32fb7"/></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="b286fe146b1dbc96f32fd2ad3485c1c8"/></dir><dir name="Model"><file name="Observer.php" hash="a95b79b25db187e52b59fb31029cb0a7"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="IntmodulebackendController.php" hash="65549f09bc7c7a8f729e39ee18ed8439"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="8f5cb6516a0246d106b16d5e53f95789"/><file name="config.xml" hash="08a16ad8c038f7d18ac8bd06770f8e4a"/><file name="system.xml" hash="dadad8e81bfee9b6d4c72ffef1e90f83"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="triggmine_integrationmodule.xml" hash="383238b8236df2a021bdcbff63f18471"/></dir><dir name="template"><dir name="triggmine"><dir name="integrationmodule"><file name="init.phtml" hash="088f4b1efdbb774a020ebcb2d6405c86"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Triggmine_IntegrationModule.xml" hash="232e7c74a00d4e31b238ddfe0c067647"/></dir></target><target name="mageweb"><dir name="js"><dir name="triggmine"><dir name="integationmodule"><dir name="scripts"><file name="client.min.js" hash="068c5c31adf266449d9de64f31772f55"/><file name="fingerprint2.min.js" hash="36b594aba875677b7ede86aa823b2493"/><file name="jscookie.min.js" hash="390302a82ecd74b0e39e2ff66eb23c13"/></dir></dir></dir></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.4.0</min><max>5.6.0</max></php></required></dependencies>
 </package>

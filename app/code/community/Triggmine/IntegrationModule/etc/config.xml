@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Triggmine_IntegrationModule>
-            <version>3.0.7</version>
+            <version>3.0.8.2</version>
         </Triggmine_IntegrationModule>
     </modules>
     <global>
@@ -25,22 +25,26 @@
             <catalog_controller_product_init>
                 <observers>
                     <send_page_init_observer>
-                        <type>singleton</type>
+                        <type>model</type>
                         <class>integrationmodule/observer</class>
                         <method>send_page_init</method>
                     </send_page_init_observer>
                 </observers>
             </catalog_controller_product_init>
-            <application_clean_cache> <!-- identifier of the event we want to catch -->
+            <admin_system_config_changed_section_triggmine> <!-- identifier of the event we want to catch -->
                 <observers>
-                    <application_clean_cache_handler> <!-- identifier of the event handler -->
+                    <application_clean_cache_handler>
                         <type>model</type>
                         <class>integrationmodule/observer</class>
                         <method>diagnostic_information_updated</method>
-                        <args></args>
                     </application_clean_cache_handler>
+                    <export_order_history_handler>
+                        <type>model</type>
+                        <class>integrationmodule/observer</class>
+                        <method>export_order_history</method>
+                    </export_order_history_handler>
                 </observers>
-            </application_clean_cache>
+            </admin_system_config_changed_section_triggmine>
             <checkout_cart_add_product_complete> <!-- identifier of the event we want to catch -->
                 <observers>
                     <checkout_cart_add_product_complete_handler> <!-- identifier of the event handler -->

@@ -4,7 +4,7 @@
     <Triggmine_IntegrationModule>
       <active>true</active>
       <codePool>community</codePool>
-      <version>3.0.6</version>
+      <version>3.0.8.2</version>
     </Triggmine_IntegrationModule>
   </modules>
 </config>

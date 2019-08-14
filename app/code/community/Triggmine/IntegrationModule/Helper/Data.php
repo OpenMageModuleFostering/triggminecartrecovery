@@ -10,7 +10,7 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_EXPORT       = 'triggmine/triggmine_export/export';
     const XML_PATH_DATE_FROM    = 'triggmine/triggmine_export/my_date_from';
     const XML_PATH_DATE_TO      = 'triggmine/triggmine_export/my_date_to';
-    const VERSION_PLUGIN        = '3.0.7';
+    const VERSION_PLUGIN        = '3.0.8.2';
 
     protected $_storeManager;
     protected $_cartItemRepository;
@@ -94,14 +94,34 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return trim(preg_replace('/\s+/', ' ', $name));
     }
+    
+    public function getProdImg($product)
+    {
+        $url = false;
+        if ($image = $product->getImage())
+        {
+            $http = (isset($_SERVER['HTTPS']) || isset($_SERVER['HTTPS']) && isset($_SERVER['HTTPS']) == "on" || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $url = $http . $_SERVER['SERVER_NAME'] . '/media/catalog/product' . $image;
+        }
+        return $url;
+    }
+    
+    public function getProdUrl($product)
+    {
+        $url = false;
+        if ($path = $product->getUrlPath())
+        {
+            $http = (isset($_SERVER['HTTPS']) || isset($_SERVER['HTTPS']) && isset($_SERVER['HTTPS']) == "on" || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $url = $http . $_SERVER['SERVER_NAME'] . '/index.php/' . $path;
+        }
+        return $url;
+    }
 
     public function getCartData()
     {   
-        $cart       = Mage::getSingleton('checkout/session');
-        $customer   = Mage::getSingleton('customer/session');
-        
-        $products   = $cart->getQuote()->getItemsCollection();
-        
+        $cart           = Mage::getSingleton('checkout/session');
+        $customer       = Mage::getSingleton('customer/session');
+        $products       = $cart->getQuote()->getItemsCollection();
         $customerId     = $customer->getCustomer()->getId();
         $customerData   = Mage::getModel('customer/customer')->load($customerId);
         $dateCreated    = $customerId ? date('Y/m/d h:m:s', $customerData->getCreatedAtTimestamp()) : null;
@@ -129,23 +149,21 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
             // to prevent duplicate entries for configurable product - consider only child simple products
             if($product->getProductType() == "simple")
             {
-            
-                $catalogProduct = $product->getProduct();
-                
-                $productId      = $catalogProduct->getId();
-                $productName    = $catalogProduct->getName();
-                
-                $productPull    = Mage::getModel('catalog/product')->load($productId);
-                
-                $productImage   = $productPull->getImageUrl();
-                $productDesc    = $productPull->getDescription();
+                $catalogProduct     = $product->getProduct();
+                $productId          = $catalogProduct->getId();
+                $productName        = $catalogProduct->getName();
+                $productPull        = Mage::getModel('catalog/product')->load($productId);
+                $productDesc        = $productPull->getDescription();
                 
                 if ($product->getParentItem())
                 {
                     $productPrice       = $product->getParentItem()->getPrice();
                     $productTotalVal    = $product->getParentItem()->getRowTotal();
                     $parentIds          = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    $categories         = Mage::getModel('catalog/product')->load($parentIds[0])->getCategoryIds();
+                    $parentItem         = Mage::getModel('catalog/product')->load($parentIds[0]);
+                    $productImage       = $this->getProdImg($parentItem);
+                    $productUrl         = $this->getProdUrl($parentItem);
+                    $categories         = $parentItem->getCategoryIds();
                     $productQty         = $product->getParentItem()->getQty();
                 }
                 else
@@ -153,30 +171,31 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
                     $productPrice       = $catalogProduct->getFinalPrice($product->getQty());
                     $productTotalVal    = $product->getRowTotal();
                     $categories         = Mage::getModel('catalog/product')->load($productId)->getCategoryIds();
+                    $productImage       = $this->getProdImg($productPull);
+                    $productUrl         = $this->getProdUrl($catalogProduct);
                     $productQty         = $product->getQty();
                 }
                 
                 $itemData = array();
-                $itemData['product_id'] = (string)$productId;
-                $itemData['product_name'] = $this->normalizeName($productName);
-                $itemData['product_desc'] = $productDesc;
-                $itemData['product_sku'] = $product->GetData('sku');
-                $itemData['product_image'] = $productImage;
-                $itemData['product_url'] = $catalogProduct->getProductUrl();
-                $itemData['product_qty'] = $productQty;
-                $itemData['product_price'] = intval($productPrice); 
-                $itemData['product_total_val'] = intval($productTotalVal);
+                $itemData['product_id']         = (string)$productId;
+                $itemData['product_name']       = $this->normalizeName($productName);
+                $itemData['product_desc']       = $productDesc;
+                $itemData['product_sku']        = $product->GetData('sku');
+                $itemData['product_image']      = $productImage;
+                $itemData['product_url']        = $productUrl;
+                $itemData['product_qty']        = $productQty;
+                $itemData['product_price']      = intval($productPrice); 
+                $itemData['product_total_val']  = intval($productTotalVal);
     
                 $itemData['product_categories'] = array();
                 
-                foreach ($categories as $categoryId) {
-                    
+                foreach ($categories as $categoryId)
+                {
                     $category = Mage::getModel('catalog/category')->load($categoryId);
                     $itemData['product_categories'][] = $category->getName();
                 }
                 
                 $data['products'][] = $itemData;
-            
             }
             else
             {
@@ -199,14 +218,11 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getOrderData($observer)
     {
-        $orderId    = $observer->getEvent()->getOrder();
-        
-        $id         = $orderId->getId();
-        $idInc      = $orderId->getIncrementId();
-        
-        $collection = Mage::getModel('sales/order')->getCollection()->addAttributeToFilter('increment_id', $idInc);
-        $order      = $collection->getFirstItem();
-        
+        $orderId        = $observer->getEvent()->getOrder();
+        $id             = $orderId->getId();
+        $idInc          = $orderId->getIncrementId();
+        $collection     = Mage::getModel('sales/order')->getCollection()->addAttributeToFilter('increment_id', $idInc);
+        $order          = $collection->getFirstItem();
         $customerId     = $order->getCustomerId();
         $customerData   = Mage::getModel('customer/customer')->load($customerId);
         $dateCreated    = $customerId ? date('Y/m/d h:m:s', $customerData->getCreatedAtTimestamp()) : null;
@@ -241,54 +257,56 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
             if($item->getProductType() == "simple")
             {
             
-                $catalogProduct     = $item->getProduct();
-                $productId          = $catalogProduct->getId();
-                $productName        = $catalogProduct->getName();
-                $productQty         = $item->getQtyOrdered();
-                $productImage       = Mage::getModel('catalog/product')->load($productId)->getImageUrl();
+                $catalogProduct         = $item->getProduct();
+                $productId              = $catalogProduct->getId();
+                $productName            = $catalogProduct->getName();
+                $productQty             = $item->getQtyOrdered();
                 
                 if ($item->getParentItem())
                 {
                     $productPrice       = $item->getParentItem()->getPrice();
                     $productTotalVal    = $item->getParentItem()->getRowTotal();
                     $parentIds          = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                    $categories         = Mage::getModel('catalog/product')->load($parentIds[0])->getCategoryIds();
+                    $parentItem         = Mage::getModel('catalog/product')->load($parentIds[0]);
+                    $productImage       = $this->getProdImg($parentItem);
+                    $productUrl         = $this->getProdUrl($parentItem);
+                    $categories         = $parentItem->getCategoryIds();
                 }
                 else
                 {
                     $productPrice       = $catalogProduct->getFinalPrice($item->getQtyOrdered());
                     $productTotalVal    = $item->getRowTotal();
+                    $productImage       = $this->getProdImg($catalogProduct);
+                    $productUrl         = $this->getProdUrl($catalogProduct);
                     $categories         = Mage::getModel('catalog/product')->load($productId)->getCategoryIds();
                 }
                 
                 
                 $itemData = array();
-                $itemData['product_id']     = (string)$productId;
-                $itemData['product_name']   = $this->normalizeName($productName);
-                $itemData['product_desc']   = $catalogProduct->getDescription();
-                $itemData['product_sku']    = $item->GetData('sku');
-                $itemData['product_image']  = $productImage;
-                $itemData['product_url']    = $catalogProduct->getProductUrl();
-                $itemData['product_qty']    = round($productQty);
-                $itemData['product_price']  = intval($productPrice);
+                $itemData['product_id']         = (string)$productId;
+                $itemData['product_name']       = $this->normalizeName($productName);
+                $itemData['product_desc']       = $catalogProduct->getDescription();
+                $itemData['product_sku']        = $item->GetData('sku');
+                $itemData['product_image']      = $productImage;
+                $itemData['product_url']        = $productUrl;
+                $itemData['product_qty']        = round($productQty);
+                $itemData['product_price']      = intval($productPrice);
                 $itemData['product_total_val']  = intval($productTotalVal);
                 $itemData['product_categories'] = array();
                 
-                foreach ($categories as $categoryId) {
-                    
+                foreach ($categories as $categoryId)
+                {
                     $category = Mage::getModel('catalog/category')->load($categoryId);
                     $itemData['product_categories'][] = $category->getName();
                 }
                 
                 $data['products'][] = $itemData;
-            
             }
             else
             {
                 continue;
             }
         }
-        
         return $data;
     }
     
@@ -393,8 +411,8 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
                 "product_name"          => $item->getName(),
                 "product_desc"          => $item->getDescription(),
                 "product_sku"           => $item->GetData('sku'),
-                "product_image"         => $item->getImageUrl(),
-                "product_url"           => $url->getCurrentUrl(),
+                "product_image"         => $this->getProdImg($item),
+                "product_url"           => $this->getProdUrl($item),
                 "product_qty"           => 1,
                 "product_price"         => $item->getFinalPrice(),
                 "product_total_val"     => $item->getPrice(),
@@ -498,19 +516,23 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
                     $productId          = $catalogProduct->getId();
                     $productName        = $catalogProduct->getName();
                     $productQty         = $item->getQtyOrdered();
-                    $productImage       = Mage::getModel('catalog/product')->load($productId)->getImageUrl();
                     
                     if ($item->getParentItem())
                     {
                         $productPrice       = $item->getParentItem()->getPrice();
                         $productTotalVal    = $item->getParentItem()->getRowTotal();
                         $parentIds          = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($productId);
-                        $categories         = Mage::getModel('catalog/product')->load($parentIds[0])->getCategoryIds();
+                        $parentItem         = Mage::getModel('catalog/product')->load($parentIds[0]);
+                        $productImage       = $this->getProdImg($parentItem);
+                        $productUrl         = $this->getProdUrl($parentItem);
+                        $categories         = $parentItem->getCategoryIds();
                     }
                     else
                     {
                         $productPrice       = $catalogProduct->getFinalPrice($item->getQtyOrdered());
                         $productTotalVal    = $item->getRowTotal();
+                        $productImage       = $this->getProdImg($catalogProduct);
+                        $productUrl         = $this->getProdUrl($catalogProduct);
                         $categories         = Mage::getModel('catalog/product')->load($productId)->getCategoryIds();
                     }
                     
@@ -521,7 +543,7 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
                     $itemData['product_desc'] = $catalogProduct->getDescription();
                     $itemData['product_sku'] = $item->GetData('sku');
                     $itemData['product_image'] = $productImage;
-                    $itemData['product_url'] = $catalogProduct->getProductUrl();
+                    $itemData['product_url'] = $productUrl;
                     $itemData['product_qty'] = round($productQty);
                     $itemData['product_price'] = intval($productPrice);
                     $itemData['product_total_val'] = intval($productTotalVal);
@@ -553,5 +575,4 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return $this->apiClient($data, 'api/events/history');
     }
-    
 }
