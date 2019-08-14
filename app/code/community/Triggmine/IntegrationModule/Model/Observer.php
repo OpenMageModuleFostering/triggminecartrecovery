@@ -29,15 +29,24 @@ class Triggmine_IntegrationModule_Model_Observer
     public function export_order_history(Varien_Event_Observer $observer)
     {
         if (Mage::helper('integrationmodule/data')->isEnabled() &&
-            Mage::helper('integrationmodule/data')->exportEnabled())
+            Mage::helper('integrationmodule/data')->exportOrderEnabled())
         {
             $data = Mage::helper('integrationmodule/data')->getOrderHistory($observer);
-            Mage::log(json_encode($data), null, 'export.log');
-            $res=Mage::helper('integrationmodule/data')->exportOrderHistory($data);
-            Mage::log($res, null, 'export.log');
+            Mage::helper('integrationmodule/data')->exportOrderHistory($data);
         }
     }
     
+    public function export_customer_history(Varien_Event_Observer $observer)
+    {
+        if (Mage::helper('integrationmodule/data')->isEnabled() &&
+            Mage::helper('integrationmodule/data')->exportCustomerEnabled())
+        {
+            $data = Mage::helper('integrationmodule/data')->getCustomerHistory($observer);
+            Mage::log(json_encode($data), null, 'export.log');
+            //Mage::helper('integrationmodule/data')->exportCustomerHistory($data);
+        }
+    }
+
     public function SalesOrderPlaceAfter(Varien_Event_Observer $observer)
     {
         if (Mage::helper('integrationmodule/data')->isEnabled())

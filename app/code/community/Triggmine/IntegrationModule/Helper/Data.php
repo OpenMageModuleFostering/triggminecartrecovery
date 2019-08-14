@@ -2,15 +2,18 @@
 
 class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const XML_PATH_ENABLED      = 'triggmine/settings/is_on';
-    const XML_PATH_URL_API      = 'triggmine/settings/url_api';
-    const XML_PATH_TOKEN        = 'triggmine/settings/token';
-    const XML_PATH_KEY          = 'triggmine/settings/key';
-    const XML_PATH_SECRET       = 'triggmine/settings/secret';
-    const XML_PATH_EXPORT       = 'triggmine/triggmine_export/export';
-    const XML_PATH_DATE_FROM    = 'triggmine/triggmine_export/my_date_from';
-    const XML_PATH_DATE_TO      = 'triggmine/triggmine_export/my_date_to';
-    
+    const XML_PATH_ENABLED               = 'triggmine/settings/is_on';
+    const XML_PATH_URL_API               = 'triggmine/settings/url_api';
+    const XML_PATH_TOKEN                 = 'triggmine/settings/token';
+    const XML_PATH_KEY                   = 'triggmine/settings/key';
+    const XML_PATH_SECRET                = 'triggmine/settings/secret';
+    const XML_PATH_ORDER_EXPORT          = 'triggmine/triggmine_order_export/export';
+    const XML_PATH_ORDER_DATE_FROM       = 'triggmine/triggmine_order_export/my_date_from';
+    const XML_PATH_ORDER_DATE_TO         = 'triggmine/triggmine_order_export/my_date_to';
+    const XML_PATH_CUSTOMER_EXPORT       = 'triggmine/triggmine_customer_export/export';
+    const XML_PATH_CUSTOMER_DATE_FROM    = 'triggmine/triggmine_customer_export/my_date_from';
+    const XML_PATH_CUSTOMER_DATE_TO      = 'triggmine/triggmine_customer_export/my_date_to';
+    const VERSION_PLUGIN        = '3.0.12.1';
 
     protected $_cartItemRepository;
     protected $_customerRepository;
@@ -22,9 +25,12 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     protected $_url;
     protected $_token;
     protected $_pluginOn;
-    protected $_enableExport;
-    protected $_exportFromDate;
-    protected $_exportToDate;
+    protected $_enableOrderExport;
+    protected $_exportOrderFromDate;
+    protected $_exportOrderToDate;
+    protected $_enableCustomerExport;
+    protected $_exportCustomerFromDate;
+    protected $_exportCustomerToDate;
 
     public function __construct()
     {
@@ -36,12 +42,15 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
         $this->_websiteId           = Mage::getModel('core/website')->load($this->_websiteCode)->getId();
         $this->_storeId             = Mage::app()->getWebsite($this->_websiteId)->getDefaultStore()->getId();
         
-        $this->_url                 = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_URL_API);
-        $this->_token               = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_TOKEN);
-        $this->_pluginOn            = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_ENABLED);
-        $this->_enableExport        = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_EXPORT);
-        $this->_exportFromDate      = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_DATE_FROM);
-        $this->_exportToDate        = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_DATE_TO);
+        $this->_url                    = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_URL_API);
+        $this->_token                  = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_TOKEN);
+        $this->_pluginOn               = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_ENABLED);
+        $this->_enableOrderExport      = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_ORDER_EXPORT);
+        $this->_exportOrderFromDate    = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_ORDER_DATE_FROM);
+        $this->_exportOrderToDate      = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_ORDER_DATE_TO);
+        $this->_enableCustomerExport   = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_CUSTOMER_EXPORT);
+        $this->_exportCustomerFromDate = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_CUSTOMER_DATE_FROM);
+        $this->_exportCustomerToDate   = Mage::app()->getWebsite($this->_websiteId)->getConfig(self::XML_PATH_CUSTOMER_DATE_TO);
     }
     
     public function apiClient($data, $method)
@@ -91,9 +100,14 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
         return ($this->_pluginOn && !empty($this->_token)) ? true : false;
     }
     
-    public function exportEnabled()
+    public function exportOrderEnabled()
     {
-        return ($this->_enableExport) ? true : false;
+        return ($this->_enableOrderExport) ? true : false;
+    }
+    
+    public function exportCustomerEnabled()
+    {
+        return ($this->_enableCustomerExport) ? true : false;
     }
 
     public function getDeviceId()
@@ -484,8 +498,8 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
         $dataExport = false;
         
         /* Format our dates */
-        $fromDate   = date('Y-m-d H:i:s', strtotime($this->_exportFromDate));
-        $toDate     = date('Y-m-d H:i:s', strtotime($this->_exportToDate));
+        $fromDate   = date('Y-m-d H:i:s', strtotime($this->_exportOrderFromDate));
+        $toDate     = date('Y-m-d H:i:s', strtotime($this->_exportOrderToDate));
         
         $dataExport = array();
         
@@ -592,5 +606,44 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     public function exportOrderHistory($data)
     {
         return $this->apiClient($data, 'api/events/history');
+    }
+    
+    public function getCustomerHistory($observer)
+    {
+        /* Format our dates */
+        $fromDate   = date('Y-m-d H:i:s', strtotime($this->_exportCustomerFromDate));
+        $toDate     = date('Y-m-d H:i:s', strtotime($this->_exportCustomerToDate));
+        
+        $dataExport = array();
+        
+        /* Get the collection */
+        $customers = Mage::getModel('customer/customer')->getCollection()
+            ->addFieldToFilter('store_id', $this->_storeId)
+            ->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate));
+        
+        foreach ($customers as $customerItem)
+        {
+            $customer       = $customerItem->getData();
+            $customerId     = $customer['entity_id'];
+            $customerInfo   = Mage::getModel('customer/customer')->load($customerId);
+            
+            $customerData = array(
+                'customer_id'              => $customerId,
+                'customer_first_name'      => $customerInfo->getFirstname(),
+                'customer_last_name'       => $customerInfo->getLastname(),
+                'customer_email'           => $customer['email'],
+                'customer_date_created'    => $customer['created_at'],
+                'customer_last_login_date' => $customer['updated_at']
+              );
+            
+            $dataExport['prospects'][] = $customerData;
+        }
+            
+        return $dataExport;
+    }
+    
+    public function exportCustomerHistory($data)
+    {
+        return $this->apiClient($data, 'api/events/history/prospects');
     }
 }

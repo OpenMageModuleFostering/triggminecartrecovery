@@ -43,6 +43,11 @@
                         <class>integrationmodule/observer</class>
                         <method>export_order_history</method>
                     </export_order_history_handler>
+                    <export_customer_history_handler>
+                        <type>model</type>
+                        <class>integrationmodule/observer</class>
+                        <method>export_customer_history</method>
+                    </export_customer_history_handler>
                 </observers>
             </admin_system_config_changed_section_triggmine>
             <checkout_cart_add_product_complete> <!-- identifier of the event we want to catch -->

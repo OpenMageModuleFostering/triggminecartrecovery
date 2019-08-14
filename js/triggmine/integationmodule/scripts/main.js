@@ -8,7 +8,7 @@ require(["Fingerprint2", "jsCookie", "ClientJS"], function (Fingerprint2, Cookie
             excludeLanguage: !0,
             extendedJsFonts: 0
         },
-        b = new ClientJS,
+        b = new ClientJS(),
         c = b.getFingerprint();
         
     Cookies.set('device_id_1', c, {
