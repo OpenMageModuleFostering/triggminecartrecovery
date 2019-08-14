@@ -32,7 +32,9 @@ class Triggmine_IntegrationModule_Model_Observer
             Mage::helper('integrationmodule/data')->exportEnabled())
         {
             $data = Mage::helper('integrationmodule/data')->getOrderHistory($observer);
-            Mage::helper('integrationmodule/data')->exportOrderHistory($data);
+            Mage::log(json_encode($data), null, 'export.log');
+            $res=Mage::helper('integrationmodule/data')->exportOrderHistory($data);
+            Mage::log($res, null, 'export.log');
         }
     }
     

@@ -10,7 +10,7 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_EXPORT       = 'triggmine/triggmine_export/export';
     const XML_PATH_DATE_FROM    = 'triggmine/triggmine_export/my_date_from';
     const XML_PATH_DATE_TO      = 'triggmine/triggmine_export/my_date_to';
-    const VERSION_PLUGIN        = '3.0.11.1';
+    
 
     protected $_cartItemRepository;
     protected $_customerRepository;
@@ -498,12 +498,14 @@ class Triggmine_IntegrationModule_Helper_Data extends Mage_Core_Helper_Abstract
             
             $customerId     = $order->getCustomerId();
             $customerData   = Mage::getModel('customer/customer')->load($customerId);
+            $dateCreated    = $customerId ? date('Y/m/d h:m:s', $customerData->getCreatedAtTimestamp()) : null;
             
             $customer = array(
-                'customer_id'         => $customerId,
-                'customer_first_name' => $order->getBillingAddress()->getFirstname(),
-                'customer_last_name'  => $order->getBillingAddress()->getLastname(),
-                'customer_email'      => $order->getCustomerEmail()
+                'customer_id'           => $customerId,
+                'customer_first_name'   => $order->getBillingAddress()->getFirstname(),
+                'customer_last_name'    => $order->getBillingAddress()->getLastname(),
+                'customer_email'        => $order->getCustomerEmail(),
+                'customer_date_created' => $dateCreated
             );
             
             $ordersExport = array(
