@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <package>
     <name>TriggMineCartRecovery</name>
-    <version>2.2.1</version>
+    <version>3.0.10.2</version>
     <stability>stable</stability>
-    <license>GPL</license>
+    <license uri="https://opensource.org/licenses/gpl-license.php">GPL</license>
     <channel>community</channel>
     <extends/>
-    <summary>Triggered Messaging Solution for E-commerce</summary>
-    <description>We provide triggered messaging solution for E-commerce. You&#x2019;ll get a set of ready-to-use business processes that will help you turn new customers into repeat customers and generate outstanding sales via Email Marketing</description>
-    <notes>Support for PHP 5.6.16</notes>
+    <summary>ECOMMERCE EMAIL MARKETING AUTOMATION FOR YOUR IDEAL CUSTOMER EXPERIENCE</summary>
+    <description>TriggMine&#x2019;s automated email campaigns are only limited by your imagination. Whoever you want to reach out to, and whatever you want to say to them, now you can, without complex coding or time consuming email management. </description>
+    <notes>- Added support for multiple websites&#xD;
+- Added notification of configuration errors&#xD;
+- Bug fixes and performance improvements</notes>
     <authors><author><name>TriggMine</name><user>TriggMine</user><email>admin@triggmine.com</email></author></authors>
-    <date>2015-12-18</date>
-    <time>14:16:57</time>
-    <contents><target name="magecommunity"><dir name="Videal"><dir name="Triggmine"><dir name="Block"><dir name="Adminhtml"><file name="Triggminebackend.php" hash="d5d872c11ae85335a8a3f627b43f2820"/></dir></dir><dir name="Helper"><file name="Data.php" hash="ae6c08289260d91677f0b26a51d45a5d"/></dir><dir name="Model"><file name="Observer.php" hash="07da984df2bcaf70b3304ffb47c8cb96"/><dir name="core"><file name="ApiClient.php" hash="dda593d167d0afb8bc77ca25ee4133f4"/><file name="Core.php" hash="d648af568f5869bb7165ba28c725bacc"/><file name="Error.php" hash="8fa1a3effc30f931f60169fd25bd849a"/><file name="Helper.php" hash="70f1bfaada3a4deae5f876bda3722146"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="TriggminebackendController.php" hash="2c42b9789bb22f10668ca258bb7ec15c"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="dbaa360cbb1da748a7492c33d13f81a7"/><file name="config.xml" hash="c168903be52c914a3ba0a617b6d539fe"/><file name="system.xml" hash="a2f383e01459b73848fef582c87909e0"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="videal_triggmine.xml" hash="c7805fd5b5496629435a0ee08f70520e"/></dir><dir name="template"><dir name="videal"><dir name="triggmine"><file name="init.phtml" hash="d2d38515ca3f5d8f49747e0c090961a0"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Videal_Triggmine.xml" hash="769d82f538877ff4bf8f6f46f046690a"/></dir></target><target name="mageweb"><dir name="js"><dir name="videal"><dir name="triggmine"><file name="api.js" hash="b279fe573df42b63f9aa98a09c65fe9d"/></dir></dir></dir></target></contents>
+    <date>2017-02-23</date>
+    <time>09:01:41</time>
+    <contents><target name="magecommunity"><dir name="Triggmine"><dir name="IntegrationModule"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Date.php" hash="d6b04acde97c3ec4eb52179740e420cb"/><file name="Footer.php" hash="1ccaf261bc98c90c931b82cb81dda396"/><file name="Info.php" hash="755eedc85ce32a1088ab2a9649faadf0"/></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="6a47d2a2273e56b320084d4835bdb569"/></dir><dir name="Model"><file name="Observer.php" hash="bdcb7662d4df3086c1746abd3b14cf59"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="IntmodulebackendController.php" hash="65549f09bc7c7a8f729e39ee18ed8439"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="fdf3bf3b8b0b0b2804d05cf5fe3c0ae3"/><file name="config.xml" hash="ddfeb57706026beea62c88a9989edf37"/><file name="system.xml" hash="bdc8bd6245fc68f222d1256635a5c9d2"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="triggmine_integrationmodule.xml" hash="7f6696bb9970dfc0d851364b2aef7379"/></dir><dir name="template"><dir name="triggmine"><dir name="integrationmodule"><file name="init.phtml" hash="088f4b1efdbb774a020ebcb2d6405c86"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Triggmine_IntegrationModule.xml" hash="9cbc41ae87d9b9973c67221a7ff96f62"/></dir></target><target name="mageweb"><dir name="js"><dir name="triggmine"><dir name="integationmodule"><dir name="scripts"><file name="client.min.js" hash="068c5c31adf266449d9de64f31772f55"/><file name="fingerprint2.min.js" hash="36b594aba875677b7ede86aa823b2493"/><file name="jscookie.min.js" hash="390302a82ecd74b0e39e2ff66eb23c13"/></dir></dir></dir></dir></target></contents>
     <compatible/>
-    <dependencies><required><php><min>5.2.1</min><max>5.6.16</max></php><package><name></name><channel>connect.magentocommerce.com/core</channel><min></min><max></max></package></required></dependencies>
+    <dependencies><required><php><min>5.4.0</min><max>5.6.0</max></php></required></dependencies>
 </package>
