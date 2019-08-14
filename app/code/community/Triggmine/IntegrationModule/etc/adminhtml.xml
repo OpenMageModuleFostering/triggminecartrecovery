@@ -1,7 +1,22 @@
 <?xml version="1.0"?>
 	<config>
+		<menu>
+            <integrationmodule translate="title" module="integrationmodule">
+                <title>Triggmine</title>
+                <sort_order>1000</sort_order>
+                <children>
+                    <integrationmodulebackend translate="title">
+                        <title>Triggmine Settings</title>
+                        <action>integrationmodule/adminhtml_intmodulebackend</action>
+                    </integrationmodulebackend>
+                </children>
+            </integrationmodule>
+        </menu>
 		<acl>
 			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
 				<admin>
 					<children>
 						<system>

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Triggmine_IntegrationModule>
-            <version>3.0.5</version>
+            <version>3.0.6</version>
         </Triggmine_IntegrationModule>
     </modules>
     <global>
@@ -19,7 +19,6 @@
         <models>
             <integrationmodule>
                 <class>Triggmine_IntegrationModule_Model</class>
-                <!--<resourceModel>integrationmodule_mysql4</resourceModel>-->
             </integrationmodule>
         </models>
         <events>
@@ -146,33 +145,4 @@
             </integrationmodule>
         </routers>
     </admin>
-    <adminhtml>
-        <acl>
-            <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
-                <admin>
-                    <children>
-                        <integrationmodule translate="title" module="integrationmodule">
-                            <title>IntegrationModule</title>
-                            <sort_order>1000</sort_order>
-                            <children>
-                                <integrationmodulebackend translate="title">
-                                    <title>Triggmine Settings</title>
-                                </integrationmodulebackend>
-                            </children>
-                        </integrationmodule>
-                    </children>
-                </admin>
-            </resources>
-        </acl>
-        <layout>
-            <updates>
-                <integrationmodule>
-                    <file>integrationmodule.xml</file>
-                </integrationmodule>
-            </updates>
-        </layout>
-    </adminhtml>
 </config>
