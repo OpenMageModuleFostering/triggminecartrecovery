@@ -47,6 +47,7 @@
 			),
 			'getBuyerByEmail'  => array(
 				'method'   => 'GetBuyerId',
+				'paramsOut'=> array(self::KEY_BUYER_ID),
 				'paramsIn' => array(self::KEY_BUYER_ID)
 			),
 			'getNewBuyer'      => array(
