@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+    <name>TriggMineCartRecovery</name>
+    <version>2.1.0</version>
+    <stability>stable</stability>
+    <license>GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Triggered Messaging Solution for E-commerce</summary>
+    <description>This is not your &#x2018;full of fluff&#x2019; marketing automation tool. TriggMine is crafted to actually convince your website visitors into becoming your Best Buyers.&#xD;
+&#xD;
+TriggMine is something crucial for every business but there are more than 95% of online stores that don&#x2019;t use a similar system. And those who actually use one &#x2013; spent months and tens of thousands of dollars on developing it.</description>
+    <notes>2.1.0</notes>
+    <authors><author><name>Triggmine</name><user>Triggmine</user><email>admin@triggmine.com</email></author></authors>
+    <date>2015-02-19</date>
+    <time>11:48:32</time>
+    <contents><target name="magecommunity"><dir name="Videal"><dir name="Triggmine"><dir name="Block"><dir name="Adminhtml"><file name="Triggminebackend.php" hash="d5d872c11ae85335a8a3f627b43f2820"/></dir></dir><dir name="Helper"><file name="Data.php" hash="ae6c08289260d91677f0b26a51d45a5d"/></dir><dir name="Model"><file name="Observer.php" hash="cfa804299ce766d96e26edb6e1040b05"/><dir name="core"><file name="ApiClient.php" hash="cdfa0176f078b8c343adf3faf9a7001a"/><file name="Core.php" hash="df582eb894cdba83f674b7d48ceb52a6"/><file name="Error.php" hash="8fa1a3effc30f931f60169fd25bd849a"/><file name="Helper.php" hash="70f1bfaada3a4deae5f876bda3722146"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="TriggminebackendController.php" hash="2c42b9789bb22f10668ca258bb7ec15c"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="dbaa360cbb1da748a7492c33d13f81a7"/><file name="config.xml" hash="611b2732d248cc163fb1740138761210"/><file name="system.xml" hash="a2f383e01459b73848fef582c87909e0"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="videal_triggmine.xml" hash="c7805fd5b5496629435a0ee08f70520e"/></dir><dir name="template"><dir name="videal"><dir name="triggmine"><file name="init.phtml" hash="d2d38515ca3f5d8f49747e0c090961a0"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Videal_Triggmine.xml" hash="a5ac4672ce78a807506436829c04647a"/></dir></target><target name="mageweb"><dir name="js"><dir name="videal"><dir name="triggmine"><file name="api.js" hash="b279fe573df42b63f9aa98a09c65fe9d"/></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.1</min><max>5.5.15</max></php></required></dependencies>
+</package>

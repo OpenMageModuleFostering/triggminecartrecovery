@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Videal_Triggmine>
+			<version>2.0.0</version>
+		</Videal_Triggmine>
+	</modules>
+	<global>
+		<helpers>
+			<triggmine>
+				<class>Videal_Triggmine_Helper</class>
+			</triggmine>
+		</helpers>
+		<models>
+			<triggmine>
+				<class>Videal_Triggmine_Model</class>
+			</triggmine>
+		</models>
+		<events>
+			<checkout_cart_add_product_complete> <!-- identifier of the event we want to catch -->
+				<observers>
+					<checkout_cart_add_product_complete_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartItemAdded</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</checkout_cart_add_product_complete_handler>
+				</observers>
+			</checkout_cart_add_product_complete>
+			<sales_quote_remove_item> <!-- identifier of the event we want to catch -->
+				<observers>
+					<sales_quote_remove_item_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartItemDeleted</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</sales_quote_remove_item_handler>
+				</observers>
+			</sales_quote_remove_item>
+			<checkout_cart_update_items_before> <!-- identifier of the event we want to catch -->
+				<observers>
+					<checkout_cart_update_items_before_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartItemUpdated</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</checkout_cart_update_items_before_handler>
+				</observers>
+			</checkout_cart_update_items_before>
+			<checkout_cart_save_after> <!-- identifier of the event we want to catch -->
+				<observers>
+					<checkout_cart_save_after_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartCleanedUp</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</checkout_cart_save_after_handler>
+				</observers>
+			</checkout_cart_save_after>
+			<customer_login> <!-- identifier of the event we want to catch -->
+				<observers>
+					<customer_login_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onBuyerLoggedIn</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</customer_login_handler>
+				</observers>
+			</customer_login>
+			<customer_register_success> <!-- identifier of the event we want to catch -->
+				<observers>
+					<customer_register_success_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onBuyerRegister</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</customer_register_success_handler>
+				</observers>
+			</customer_register_success>
+			<customer_logout> <!-- identifier of the event we want to catch -->
+				<observers>
+					<customer_logout_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onBuyerLoggedOut</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</customer_logout_handler>
+				</observers>
+			</customer_logout>
+			<customer_logout> <!-- identifier of the event we want to catch -->
+				<observers>
+					<customer_logout_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onBuyerLoggedOut</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</customer_logout_handler>
+				</observers>
+			</customer_logout>
+			<sales_order_place_after> <!-- identifier of the event we want to catch -->
+				<observers>
+					<sales_order_place_after_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onCartPurchased</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</sales_order_place_after_handler>
+				</observers>
+			</sales_order_place_after>
+			<controller_action_layout_load_before> <!-- identifier of the event we want to catch -->
+				<observers>
+					<controller_action_postdispatch_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onPageLoaded</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</controller_action_postdispatch_handler>
+				</observers>
+			</controller_action_layout_load_before>
+			<admin_system_config_changed_section_triggmine> <!-- identifier of the event we want to catch -->
+				<observers>
+					<admin_system_config_changed_section_triggmine_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onChangedTriggmine</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</admin_system_config_changed_section_triggmine_handler>
+				</observers>
+			</admin_system_config_changed_section_triggmine>
+			<frontend_videal_triggmine_footer_event> <!-- identifier of the event we want to catch -->
+				<observers>
+					<frontend_videal_triggmine_footer_event_handler> <!-- identifier of the event handler -->
+						<type>model</type>
+						<!-- class method call type; valid are model, object and singleton -->
+						<class>triggmine/observer</class>
+						<!-- observers class alias -->
+						<method>onFooterEvent</method>
+						<!-- observer's method to be called -->
+						<args></args>
+						<!-- additional arguments passed to observer -->
+					</frontend_videal_triggmine_footer_event_handler>
+				</observers>
+			</frontend_videal_triggmine_footer_event>
+		</events>
+	</global>
+	<frontend>
+		<layout>
+			<updates>
+				<videal_triggmine>
+					<file>videal_triggmine.xml</file>
+				</videal_triggmine>
+			</updates>
+		</layout>
+	</frontend>
+	<admin>
+		<routers>
+			<triggmine>
+				<use>admin</use>
+				<args>
+					<module>Videal_Triggmine</module>
+					<frontName>admin_triggmine</frontName>
+				</args>
+			</triggmine>
+		</routers>
+	</admin>
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<triggmine translate="title" module="triggmine">
+							<title>Triggmine</title>
+							<sort_order>1000</sort_order>
+							<children>
+								<triggminebackend translate="title">
+									<title>Triggmine</title>
+								</triggminebackend>
+							</children>
+						</triggmine>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<triggmine>
+					<file>triggmine.xml</file>
+				</triggmine>
+			</updates>
+		</layout>
+	</adminhtml>
+</config> 

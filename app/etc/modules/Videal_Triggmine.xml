@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Videal_Triggmine>
+      <active>true</active>
+      <codePool>community</codePool>
+      <version>2.1.0</version>
+    </Videal_Triggmine>
+  </modules>
+</config>

@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/TriggMineCartRecovery",
+    "type": "magento-module",
+    "license": "GPL",
+    "homepage": "",
+    "description": "Triggered Messaging Solution for E-commerce",
+    "authors": [
+    {
+        "name": "Triggmine",
+        "email": "admin@triggmine.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
