@@ -1,7 +1,18 @@
 <?php if (Mage::helper('core')->isModuleEnabled('Triggmine_IntegrationModule') && Mage::helper('integrationmodule/data')->isEnabled()) : ?>
-<!--<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/triggmine-scripts.js"></script>-->
-<script data-main="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/main" src="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/require.js"></script>
+
+<!-- TriggMine -->
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/fingerprint2.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/client.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js'); ?>triggmine/integationmodule/scripts/jscookie.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+    document.addEventListener('DOMContentLoaded',function(){var a={swfPath:'/assets/FontList.swf',excludeUserAgent:!0,excludeLanguage:!0},b=new ClientJS,c=b.getFingerprint();Cookies.set('device_id_1',c,{path:'/',expires:7}),new Fingerprint2(a).get(function(a){Cookies.set('device_id',a,{path:'/',expires:7})})});
+//]]
+</script>
+<!-- TriggMine End -->
+
 <?php else: ?>
+
 <!-- TriggMine module is not used! -->
 <script type="text/javascript">
 //<![CDATA[

@@ -2,16 +2,9 @@
 <config>
     <modules>
         <Triggmine_IntegrationModule>
-            <version>3.0.19</version>
+            <version>3.0.5</version>
         </Triggmine_IntegrationModule>
     </modules>
-    <default>
-        <triggmine>
-            <settings>
-                <plugin_set_up>0</plugin_set_up>
-            </settings>
-        </triggmine>
-    </default>
     <global>
         <helpers>
             <integrationmodule>
@@ -26,46 +19,29 @@
         <models>
             <integrationmodule>
                 <class>Triggmine_IntegrationModule_Model</class>
+                <!--<resourceModel>integrationmodule_mysql4</resourceModel>-->
             </integrationmodule>
         </models>
         <events>
             <catalog_controller_product_init>
                 <observers>
                     <send_page_init_observer>
-                        <type>model</type>
+                        <type>singleton</type>
                         <class>integrationmodule/observer</class>
                         <method>send_page_init</method>
                     </send_page_init_observer>
                 </observers>
             </catalog_controller_product_init>
-            <admin_system_config_changed_section_triggmine> <!-- identifier of the event we want to catch -->
+            <application_clean_cache> <!-- identifier of the event we want to catch -->
                 <observers>
-                    <application_clean_cache_handler>
+                    <application_clean_cache_handler> <!-- identifier of the event handler -->
                         <type>model</type>
                         <class>integrationmodule/observer</class>
                         <method>diagnostic_information_updated</method>
+                        <args></args>
                     </application_clean_cache_handler>
-                    <export_order_history_handler>
-                        <type>model</type>
-                        <class>integrationmodule/observer</class>
-                        <method>export_order_history</method>
-                    </export_order_history_handler>
-                    <export_customer_history_handler>
-                        <type>model</type>
-                        <class>integrationmodule/observer</class>
-                        <method>export_customer_history</method>
-                    </export_customer_history_handler>
                 </observers>
-            </admin_system_config_changed_section_triggmine>
-            <triggmine_product_export>
-                <observers>
-                    <export_product_history_handler>
-                        <type>model</type>
-                        <class>integrationmodule/observer</class>
-                        <method>export_product_history</method>
-                    </export_product_history_handler>
-                </observers>
-            </triggmine_product_export>
+            </application_clean_cache>
             <checkout_cart_add_product_complete> <!-- identifier of the event we want to catch -->
                 <observers>
                     <checkout_cart_add_product_complete_handler> <!-- identifier of the event handler -->
@@ -148,16 +124,6 @@
                     </customer_logout_handler>
                 </observers>
             </customer_logout>
-            <catalog_product_save_after> <!-- identifier of the event we want to catch -->
-                <observers>
-                    <catalog_product_save_after_handler> <!-- identifier of the event handler -->
-                        <type>model</type><!-- class method call type; valid are model, object and singleton -->
-                        <class>integrationmodule/observer</class> <!-- observers class alias -->
-                        <method>CatalogProductSaveAfter</method>  <!-- observer's method to be called -->
-                        <args></args> <!-- additional arguments passed to observer -->
-                    </catalog_product_save_after_handler>
-                </observers>
-            </catalog_product_save_after>
         </events>
     </global>
     <frontend>
@@ -178,21 +144,34 @@
                     <frontName>admin_integrationmodule</frontName>
                 </args>
             </integrationmodule>
-            <integrationmodule>
-                <use>admin</use>
-                <args>
-                    <module>Triggmine_IntegrationModule</module>
-                    <frontName>triggmine</frontName>
-                </args>
-            </integrationmodule>
         </routers>
     </admin>
     <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <integrationmodule translate="title" module="integrationmodule">
+                            <title>IntegrationModule</title>
+                            <sort_order>1000</sort_order>
+                            <children>
+                                <integrationmodulebackend translate="title">
+                                    <title>Triggmine Settings</title>
+                                </integrationmodulebackend>
+                            </children>
+                        </integrationmodule>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
         <layout>
             <updates>
-                <triggmine_integrationmodule>
-                    <file>triggmine.xml</file>
-                </triggmine_integrationmodule>
+                <integrationmodule>
+                    <file>integrationmodule.xml</file>
+                </integrationmodule>
             </updates>
         </layout>
     </adminhtml>
