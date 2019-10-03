@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/TriggMineCartRecovery",
+    "name": "OpenMageModuleFostering\/TriggMineCartRecovery",
     "type": "magento-module",
     "license": "GPL",
     "homepage": "",
     "description": "ECOMMERCE EMAIL MARKETING AUTOMATION FOR YOUR IDEAL CUSTOMER EXPERIENCE.",
     "authors": [
-    {
-        "name": "TriggMine",
-        "email": "admin@triggmine.com"
-    }
-],
+        {
+            "name": "TriggMine",
+            "email": "admin@triggmine.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
